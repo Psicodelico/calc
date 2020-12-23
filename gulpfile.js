@@ -1,23 +1,8 @@
-const { series, parallel, src, dest } = require('gulp');
+const { series, parallel } = require('gulp');
+const transpile = require('./gulp/transpile');
 
 function clean(cb) {
     console.log('clean');
-    cb();
-}
-
-function javascript(cb) {
-    console.log('javascript');
-    return src('app/src/*.js').pipe(dest('app/dist/'));
-}
-
-function css(cb) {
-    console.log('css');
-    cb();
-}
-
-function transpile(cb) {
-    console.log('transpile');
-    parallel(javascript, css)();
     cb();
 }
 
