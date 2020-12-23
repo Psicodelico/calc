@@ -1,7 +1,14 @@
 const { parallel, src, dest } = require('gulp');
+const babel = require('gulp-babel');
 
 function javascript(cb) {
-    return src('app/src/*.js').pipe(dest('app/dist/'));
+    return src('app/src/*.js')
+        .pipe(
+            babel({
+                presets: ['@babel/preset-env']
+            })
+        )
+        .pipe(dest('app/dist/'));
 }
 
 function css(cb) {
