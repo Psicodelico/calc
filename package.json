@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/Psicodelico/calc#readme",
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
     "cross-env": "^7.0.3",
-    "gulp": "^4.0.2"
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0"
   }
 }
