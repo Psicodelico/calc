@@ -1,16 +1,22 @@
-const { parallel, src, dest } = require('gulp');
+const { series, parallel, src, dest } = require('gulp');
 const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 
-function javascript(cb) {
+function uglifyJs() {
+    return src('app/dist/*.js').pipe(uglify()).pipe(dest('app/mini/'));
+}
+function es2js() {
     return src('app/src/*.js')
         .pipe(
             babel({
                 presets: ['@babel/preset-env']
             })
         )
-        .pipe(uglify())
         .pipe(dest('app/dist/'));
+}
+
+async function javascript(cb) {
+    series(es2js, uglifyJs)();
 }
 
 function css(cb) {
@@ -22,4 +28,8 @@ function transpile(cb) {
     cb();
 }
 
-module.exports = transpile;
+module.exports = {
+    javascript,
+    css,
+    transpile
+};

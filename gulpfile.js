@@ -1,11 +1,12 @@
-const { series, parallel } = require('gulp');
-const transpile = require('./gulp/transpile');
+const { series, parallel, watch } = require('gulp');
+const { transpile, javascript } = require('./gulp/transpile');
 
 function clean(cb) {
     cb();
 }
 
 function livereload(cb) {
+    watch('app/src/*.js', javascript);
     cb();
 }
 
@@ -14,10 +15,10 @@ function minify(cb) {
 }
 
 function build(cb) {
-    if (process.env.NODE_ENV === 'pro') {
-        series(transpile, minify)();
-    } else {
+    if (process.env.NODE_ENV === 'dev') {
         series(transpile, livereload)();
+    } else {
+        series(transpile, minify)();
     }
     cb();
 }
