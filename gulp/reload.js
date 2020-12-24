@@ -5,19 +5,20 @@ const browsersync = require('browser-sync').create();
 function browsersyncServe(cb) {
     browsersync.init({
         server: {
-            baseDir: '.'
+            baseDir: './app'
         }
     });
     cb();
 }
 
 function browsersyncReload(cb) {
+    console.log(1);
     browsersync.reload();
     cb();
 }
 
 function livereload(cb) {
-    watch('*.html', browsersyncReload);
+    watch('app/*.html', browsersyncReload);
     watch('app/src/*.less', series(css, browsersyncReload));
     watch('app/src/*.js', series(javascript, browsersyncReload));
     cb();
