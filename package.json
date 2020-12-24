@@ -26,5 +26,8 @@
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-uglify": "^3.0.2"
+  },
+  "dependencies": {
+    "del": "^6.0.0"
   }
 }

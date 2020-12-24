@@ -1,8 +1,9 @@
 const { series, parallel, watch } = require('gulp');
 const { transpile, javascript } = require('./gulp/transpile');
+const del = require('del');
 
-function clean(cb) {
-    cb();
+async function clean() {
+    del(['app/mini/', 'app/dist/'], { force: true });
 }
 
 function livereload(cb) {
@@ -23,5 +24,6 @@ function build(cb) {
     cb();
 }
 
+exports.clean = clean;
 exports.build = build;
 exports.default = series(clean, build);
