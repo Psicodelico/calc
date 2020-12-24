@@ -1,23 +1,22 @@
-const { series, parallel, watch } = require('gulp');
-const { transpile, javascript } = require('./gulp/transpile');
+const { series, parallel, src, dest } = require('gulp');
+const uglify = require('gulp-uglify');
 const del = require('del');
 
-async function clean() {
-    del(['app/mini/', 'app/dist/'], { force: true });
-}
+const { transpile } = require('./gulp/transpile');
+const { browsersyncServe, livereload } = require('./gulp/reload');
 
-function livereload(cb) {
-    watch('app/src/*.js', javascript);
+async function clean(cb) {
+    del(['app/mini/**', 'app/dist/**'], { force: true });
     cb();
 }
 
-function minify(cb) {
-    cb();
+function minify() {
+    return src('app/dist/**/*.js').pipe(uglify()).pipe(dest('app/mini/'));
 }
 
 function build(cb) {
     if (process.env.NODE_ENV === 'dev') {
-        series(transpile, livereload)();
+        series(transpile, browsersyncServe, livereload)();
     } else {
         series(transpile, minify)();
     }

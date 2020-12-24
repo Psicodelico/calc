@@ -1,11 +1,9 @@
 const { series, parallel, src, dest } = require('gulp');
 const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
+const less = require('gulp-less');
 
-function uglifyJs() {
-    return src('app/dist/**/*.js').pipe(uglify()).pipe(dest('app/mini/'));
-}
-function es2js() {
+// stream
+function javascript() {
     return src('app/src/**/*.js')
         .pipe(
             babel({
@@ -15,12 +13,9 @@ function es2js() {
         .pipe(dest('app/dist/'));
 }
 
-async function javascript() {
-    series(es2js, uglifyJs)();
-}
-
-function css(cb) {
-    cb();
+// stream
+function css() {
+    return src('app/src/**/*.less').pipe(less()).pipe(dest('app/dist/'));
 }
 
 function transpile(cb) {
