@@ -1,7 +1,7 @@
-const { series, parallel, src, dest } = require('gulp');
-const uglify = require('gulp-uglify');
+const { series, parallel } = require('gulp');
 const del = require('del');
 
+const { minifyJS, minifyCSS } = require('./gulp/uglify');
 const { transpile } = require('./gulp/transpile');
 const { browsersyncServe, livereload } = require('./gulp/reload');
 
@@ -10,8 +10,10 @@ async function clean(cb) {
     cb();
 }
 
-function minify() {
-    return src('app/dist/**/*.js').pipe(uglify()).pipe(dest('app/mini/'));
+function minify(cb) {
+    console.log(1);
+    parallel(minifyJS, minifyCSS)();
+    cb();
 }
 
 function build(cb) {

@@ -12,7 +12,6 @@ function browsersyncServe(cb) {
 }
 
 function browsersyncReload(cb) {
-    console.log(1);
     browsersync.reload();
     cb();
 }
