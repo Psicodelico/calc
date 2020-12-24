@@ -11,7 +11,6 @@ async function clean(cb) {
 }
 
 function minify(cb) {
-    console.log(1);
     parallel(minifyJS, minifyCSS)();
     cb();
 }
