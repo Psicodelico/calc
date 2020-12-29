@@ -13,7 +13,7 @@ const prices = [2, 3, 4],
 function getDivide(price, total) {
     return {
         ceil: Math.ceil(total / price),
-        floor: Math.floor(total / price)
+        floor: Math.floor(total / price),
     };
 }
 
@@ -36,7 +36,7 @@ console.log(averageCount);
 
 let items = prices.map((t) => ({
     price: t,
-    count: averageCount
+    count: averageCount,
 }));
 
 console.log(items);
@@ -48,7 +48,6 @@ function sum(items) {
 // console.log(sum(items));
 
 function calc(arr, total) {
-    debugger;
     let items = Array.from(arr);
     console.log(items, total);
     if (1 === items.length) {
