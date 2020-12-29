@@ -1,4 +1,13 @@
-const prices = [1, 2, 3, 4, 5],
+/* function* test() {
+    yield 1;
+    return 2;
+}
+let a = test();
+console.log(a.next().value);
+console.log(a.next().value);
+console.log(a.next().value); */
+
+const prices = [2, 3, 4],
     total = 50;
 
 function getDivide(price, total) {
@@ -23,14 +32,14 @@ function getAverageCount(prices, total) {
 
 const averageCount = getAverageCount(prices, total);
 
-// console.log(averageCount);
+console.log(averageCount);
 
 let items = prices.map((t) => ({
     price: t,
     count: averageCount
 }));
 
-// console.log(items);
+console.log(items);
 
 function sum(items) {
     return items.reduce((o, n) => o + n.price * n.count, 0);
@@ -39,11 +48,13 @@ function sum(items) {
 // console.log(sum(items));
 
 function calc(arr, total) {
+    debugger;
     let items = Array.from(arr);
+    console.log(items, total);
     if (1 === items.length) {
         let item = items[0],
             count = total / item.price;
-        if (!(total % item.price) && item.count !== count) {
+        if (!(total % item.price)) {
             item.count = count;
             return items;
         } else {
@@ -51,7 +62,6 @@ function calc(arr, total) {
         }
     }
     let item = items.shift();
-
     let divide = getDivide(item.price, total).ceil;
     while (item.count < divide) {
         let res = calc(items, total - item.count * item.price);
@@ -64,26 +74,16 @@ function calc(arr, total) {
         }
     }
 
-    /* item.count = averageCount;
-    while (item.count > 0) {
-        let res = calc(items, total - item.count * item.price);
-        // console.log(`${item.price}循环结果${JSON.stringify(res)}`);
-        if (res) {
-            res.unshift(item);
-            return res;
-        } else {
-            item.count--;
-        }
-    } */
-
     return false;
 }
 
-let tmpItems = [
-    {
-        price: 1,
-        count: 1
-    },
+/* if (sum(items) === total) {
+    items[items.length - 2]++;
+} */
+
+console.log(calc(items, total));
+
+/* let tmpItems = [
     {
         price: 2,
         count: 1
@@ -94,18 +94,11 @@ let tmpItems = [
     },
     {
         price: 4,
-        count: 1
-    },
-    {
-        price: 5,
-        count: 1
+        count: 6
     }
 ];
-/* let result = calc(
-    tmpItems,
-    total
-);
-console.log(result); */
+let result = calc(tmpItems, total);
+console.log(result);
 
 let tmp = tmpItems;
 const interval = setInterval(() => {
@@ -116,13 +109,4 @@ const interval = setInterval(() => {
         console.log('end');
         clearInterval(interval);
     }
-}, 2000);
-
-/* function* test() {
-    yield 1;
-    return 2;
-}
-let a = test();
-console.log(a.next().value);
-console.log(a.next().value);
-console.log(a.next().value); */
+}, 2000); */
