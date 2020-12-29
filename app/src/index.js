@@ -7,9 +7,6 @@ console.log(a.next().value);
 console.log(a.next().value);
 console.log(a.next().value); */
 
-const prices = [2, 3, 4],
-    total = 50;
-
 function getDivide(price, total) {
     return {
         ceil: Math.ceil(total / price),
@@ -30,35 +27,23 @@ function getAverageCount(prices, total) {
     return getDivide(sumPrice, total).floor;
 }
 
-const averageCount = getAverageCount(prices, total);
-
-console.log(averageCount);
-
-let items = prices.map((t) => ({
-    price: t,
-    count: averageCount,
-}));
-
-console.log(items);
-
 function sum(items) {
     return items.reduce((o, n) => o + n.price * n.count, 0);
 }
 
-// console.log(sum(items));
-
 function calc(arr, total) {
     let items = Array.from(arr);
-    console.log(items, total);
     if (1 === items.length) {
-        let item = items[0],
-            count = total / item.price;
+        let item = items[0];
         if (!(total % item.price)) {
-            item.count = count;
-            return items;
-        } else {
-            return false;
+            let count = total / item.price;
+            if (count !== item.count) {
+                // 防止本次答案与上次相同
+                item.count = count;
+                return items;
+            }
         }
+        return false;
     }
     let item = items.shift();
     let divide = getDivide(item.price, total).ceil;
@@ -70,42 +55,66 @@ function calc(arr, total) {
             return res;
         } else {
             item.count++;
+            items[0].count = 1;
         }
     }
 
     return false;
 }
 
-/* if (sum(items) === total) {
-    items[items.length - 2]++;
-} */
+const prices = [2, 3, 4],
+    total = 50;
+const averageCount = getAverageCount(prices, total);
 
-console.log(calc(items, total));
+// console.log(1, averageCount);
 
-/* let tmpItems = [
+let items = prices.map((t) => ({
+    price: t,
+    count: averageCount,
+}));
+
+let tmpItems = [
     {
         price: 2,
-        count: 1
+        count: 1,
     },
     {
         price: 3,
-        count: 1
+        count: 1,
     },
     {
         price: 4,
-        count: 6
-    }
+        count: 1,
+    },
 ];
-let result = calc(tmpItems, total);
-console.log(result);
 
-let tmp = tmpItems;
+// console.log(calc(tmpItems, total));
+
+let tmp = items;
+
 const interval = setInterval(() => {
     tmp = calc(tmp, total);
+
     if (tmp) {
-        console.log(tmp);
+        let arr = Array.from(tmp);
+        // console.log(arr);
+        console.log(JSON.stringify(arr));
     } else {
         console.log('end');
         clearInterval(interval);
     }
-}, 2000); */
+}, 200);
+
+/* let bool = true;
+while (bool) {
+    tmp = calc(tmp, total);
+
+    if (tmp) {
+        let arr = Array.from(tmp);
+        // console.log(arr);
+        console.log(JSON.stringify(arr));
+    } else {
+        console.log('end');
+        bool = false;
+    }
+} */
