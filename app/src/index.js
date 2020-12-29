@@ -1,5 +1,5 @@
-const prices = [12, 14, 15, 20],
-    total = 500;
+const prices = [1, 2, 3, 4, 5],
+    total = 50;
 
 function getDivide(price, total) {
     return {
@@ -25,7 +25,7 @@ const averageCount = getAverageCount(prices, total);
 
 // console.log(averageCount);
 
-const items = prices.map((t) => ({
+let items = prices.map((t) => ({
     price: t,
     count: averageCount
 }));
@@ -38,24 +38,24 @@ function sum(items) {
 
 // console.log(sum(items));
 
-function calc(items, total) {
+function calc(arr, total) {
+    let items = Array.from(arr);
     if (1 === items.length) {
-        let item = items[0];
-        if (!(total % item.price)) {
-            item.count = total / item.price;
+        let item = items[0],
+            count = total / item.price;
+        if (!(total % item.price) && item.count !== count) {
+            item.count = count;
             return items;
         } else {
             return false;
         }
     }
-
     let item = items.shift();
-    // console.log(item);
+
     let divide = getDivide(item.price, total).ceil;
-    // console.log(divide);
     while (item.count < divide) {
         let res = calc(items, total - item.count * item.price);
-        // console.log(res);
+        // console.log(`${item.price}循环结果${JSON.stringify(res)}`);
         if (res) {
             res.unshift(item);
             return res;
@@ -63,10 +63,60 @@ function calc(items, total) {
             item.count++;
         }
     }
+
+    /* item.count = averageCount;
+    while (item.count > 0) {
+        let res = calc(items, total - item.count * item.price);
+        // console.log(`${item.price}循环结果${JSON.stringify(res)}`);
+        if (res) {
+            res.unshift(item);
+            return res;
+        } else {
+            item.count--;
+        }
+    } */
+
+    return false;
 }
 
-let result = calc(items, 500);
-console.log(result);
+let tmpItems = [
+    {
+        price: 1,
+        count: 1
+    },
+    {
+        price: 2,
+        count: 1
+    },
+    {
+        price: 3,
+        count: 1
+    },
+    {
+        price: 4,
+        count: 1
+    },
+    {
+        price: 5,
+        count: 1
+    }
+];
+/* let result = calc(
+    tmpItems,
+    total
+);
+console.log(result); */
+
+let tmp = tmpItems;
+const interval = setInterval(() => {
+    tmp = calc(tmp, total);
+    if (tmp) {
+        console.log(tmp);
+    } else {
+        console.log('end');
+        clearInterval(interval);
+    }
+}, 2000);
 
 /* function* test() {
     yield 1;
