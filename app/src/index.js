@@ -37,11 +37,10 @@ function calc(arr, total) {
         let item = items[0];
         if (!(total % item.price)) {
             let count = total / item.price;
-            if (count !== item.count) {
-                // 防止本次答案与上次相同
-                item.count = count;
-                return items;
-            }
+            // if (count !== item.count) {
+            item.count = count;
+            return items;
+            // }
         }
         return false;
     }
@@ -60,6 +59,14 @@ function calc(arr, total) {
     }
 
     return false;
+}
+
+function gen(items, total) {
+    // 防止本次答案与上次相同
+    if (sum(items) === total) {
+        items[items.length - 2].count++;
+    }
+    return calc(items, total);
 }
 
 const prices = [2, 3, 4],
@@ -88,12 +95,12 @@ let tmpItems = [
     },
 ];
 
-// console.log(calc(tmpItems, total));
+// console.log(gen(tmpItems, total));
 
 let tmp = items;
 
 const interval = setInterval(() => {
-    tmp = calc(tmp, total);
+    tmp = gen(tmp, total);
 
     if (tmp) {
         let arr = Array.from(tmp);
@@ -107,7 +114,7 @@ const interval = setInterval(() => {
 
 /* let bool = true;
 while (bool) {
-    tmp = calc(tmp, total);
+    tmp = gen(tmp, total);
 
     if (tmp) {
         let arr = Array.from(tmp);
