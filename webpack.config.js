@@ -5,5 +5,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'app/dist'),
         filename: 'index.js'
-    }
+    },
+    module:{},
+    resolve:{},
+    devServer:{}
 }
